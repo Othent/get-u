@@ -60,7 +60,7 @@ const U = () => {
               <>
                 <span>
                   <span style={{ color: 'green' }}>Successfully claimed: </span>
-                  {1} $U
+                  {0.1} $U
                 </span>
                 <p className="u-p">
                   Wallet address:
