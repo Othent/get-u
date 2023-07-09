@@ -23,7 +23,6 @@ export const heroContainer = styled.div`
   align-items: center;
   flex-direction: column;
   width: 100%;
-  background-color: lightblue;
 `;
 
 
@@ -33,14 +32,27 @@ export const getUContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: fit-content;
+  width: 350px;
   height: fit-content;
   background-color: white;
   padding: 50px;
   border-radius: 5px;
-  gap: 30px;
+  gap: 50px;
+  border: 1px solid black;
   .u-logo {
     height: 150px;
+  }
+  .u-title {
+    font-weight: normal;
+  }
+  .u-p {
+    word-wrap: break-word;
+    text-align: center;
+    font-size: 15px;
+  }
+  .walletAddressLink {
+    text-decoration: underline;
+    color: #2375ef;
   }
 `;
 
@@ -57,13 +69,8 @@ export const ULogo = styled.img`
 
 
 
-export const logIn = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 10px;
-  background-color: white;
-  gap: 5px;
+export const logIn = styled(Button)`
+  cursor: pointer;
 `;
 
 

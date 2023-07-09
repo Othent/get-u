@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <SectionOne>
       <Head>
-        <title>Othent $U Token Faucet - Merging Web2 to Web3 user logins with a familiar and simple interface.</title>
+        <title>Othent | $U Token Faucet</title>
         <link rel='icon' href='https://Othent.io/favicon.ico' />
         <meta property="og:title" content="Othent - Merging Web2 to Web3 user logins with a familiar and simple interface."/>
         <meta property='og:description' content='Othent - Merging Web2 to Web3 user logins with a familiar and simple interface.' />

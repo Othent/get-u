@@ -2,6 +2,8 @@ import { useState } from 'react';
 import * as Styled from './styles';
 import { Othent } from 'othent';
 import { useEffect } from 'react';
+import axios from 'axios';
+
 
 const U = () => {
   const [othent, setOthent] = useState(null);
@@ -19,12 +21,32 @@ const U = () => {
 
   const [userDetails, setUserDetails] = useState(null);
   const [claimedU, setClaimedU] = useState(null);
+
   async function getU() {
     const userDetails = await othent.logIn();
     setUserDetails(userDetails);
 
-    const getURequest = await fetch('')
-    setClaimedU(getURequest)
+
+    const transferReq = await axios({
+        method: 'POST',
+        url: 'https://server.othent.io/claim-u',
+        data: { userDetails }
+    })
+    console.log(transferReq)
+    const transferResponse = transferReq.data.success
+
+    if (transferResponse === true) {
+      setClaimedU('success');
+    } else if (transferResponse === 'alreadyClaimed') {
+      setClaimedU('alreadyClaimed');
+    } else {
+      setClaimedU('failed');
+    }
+  }
+
+  function shortenWalletAddress(walletAddress) {
+    const shortened = walletAddress.slice(0, 7) + '...' + walletAddress.slice(-7);
+    return shortened;
   }
 
   return (
@@ -32,18 +54,56 @@ const U = () => {
       <Styled.heroContainer>
         <Styled.getUContainer>
           <img className="u-logo" src="/u.png" alt="$U logo" />
-          <h1>$U Token Faucet</h1>
+          <h1 className="u-title">$U Token Faucet</h1>
           {userDetails ? (
-            <>
-
-              <span>Claimed</span>
-
-            </>
+            <div>
+              {claimedU === 'success' ? (
+                <>
+                  <span>
+                    <span style={{ color: 'green' }}>Successfully claimed: </span>
+                    {1} $U
+                  </span>
+                  <p className="u-p">
+                    Wallet address:
+                    <a
+                      className="walletAddressLink"
+                      target="_blank"
+                      href={`https://sonar.warp.cc/#/app/contract/${userDetails.contract_id}?network=mainnet`}
+                    >
+                      {' '}
+                      {shortenWalletAddress(userDetails.contract_id)}
+                    </a>
+                  </p>
+                </>
+              ) : claimedU === 'alreadyClaimed' ? (
+                <>
+                  <span>
+                    <span style={{ color: 'red' }}>Already claimed</span>
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span>
+                    <span style={{ color: 'red' }}>Claim failed</span>
+                  </span>
+                </>
+              )}
+              {claimedU === 'failed' && (
+                <>
+                  <span>
+                    <span style={{ color: 'red' }}>Claim failed</span>
+                  </span>
+                </>
+              )}
+            </div>
           ) : (
-            <Styled.logIn onClick={getU}>
-              <img src="/google.svg" alt="Google Icon" />
-              <span>Get $U with Google</span>
-            </Styled.logIn>
+            <>
+              <p className="u-p">Claim Arweave $U tokens with your Google account!</p>
+              <Styled.logIn onClick={getU}>
+                <img src="/google.svg" alt="Google Icon" />
+                <span>Claim with Google</span>
+              </Styled.logIn>
+            </>
           )}
         </Styled.getUContainer>
       </Styled.heroContainer>
@@ -52,3 +112,5 @@ const U = () => {
 };
 
 export default U;
+
+
