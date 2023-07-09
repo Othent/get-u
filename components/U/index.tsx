@@ -32,7 +32,6 @@ const U = () => {
         url: 'https://server.othent.io/claim-u',
         data: { userDetails }
     })
-    console.log(transferReq)
     const transferResponse = transferReq.data.success
 
     if (transferResponse === true) {
@@ -49,53 +48,45 @@ const U = () => {
     return shortened;
   }
 
+
   return (
     <Styled.MainWrapper>
       <Styled.heroContainer>
         <Styled.getUContainer>
           <img className="u-logo" src="/u.png" alt="$U logo" />
           <h1 className="u-title">$U Token Faucet</h1>
-          {userDetails ? (
-            <div>
-              {claimedU === 'success' ? (
-                <>
-                  <span>
-                    <span style={{ color: 'green' }}>Successfully claimed: </span>
-                    {1} $U
-                  </span>
-                  <p className="u-p">
-                    Wallet address:
-                    <a
-                      className="walletAddressLink"
-                      target="_blank"
-                      href={`https://sonar.warp.cc/#/app/contract/${userDetails.contract_id}?network=mainnet`}
-                    >
-                      {' '}
-                      {shortenWalletAddress(userDetails.contract_id)}
-                    </a>
-                  </p>
-                </>
-              ) : claimedU === 'alreadyClaimed' ? (
-                <>
-                  <span>
-                    <span style={{ color: 'red' }}>Already claimed</span>
-                  </span>
-                </>
-              ) : (
-                <>
-                  <span>
-                    <span style={{ color: 'red' }}>Claim failed</span>
-                  </span>
-                </>
-              )}
-              {claimedU === 'failed' && (
-                <>
-                  <span>
-                    <span style={{ color: 'red' }}>Claim failed</span>
-                  </span>
-                </>
-              )}
-            </div>
+          {claimedU ? (
+            claimedU === 'success' ? (
+              <>
+                <span>
+                  <span style={{ color: 'green' }}>Successfully claimed: </span>
+                  {1} $U
+                </span>
+                <p className="u-p">
+                  Wallet address:
+                  <a
+                    className="walletAddressLink"
+                    target="_blank"
+                    href={`https://sonar.warp.cc/#/app/contract/${userDetails.contract_id}?network=mainnet`}
+                  >
+                    {' '}
+                    {shortenWalletAddress(userDetails.contract_id)}
+                  </a>
+                </p>
+              </>
+            ) : claimedU === 'alreadyClaimed' ? (
+              <>
+                <span>
+                  <span style={{ color: 'red' }}>Already claimed</span>
+                </span>
+              </>
+            ) : (
+              <>
+                <span>
+                  <span style={{ color: 'red' }}>Claim failed</span>
+                </span>
+              </>
+            )
           ) : (
             <>
               <p className="u-p">Claim Arweave $U tokens with your Google account!</p>
